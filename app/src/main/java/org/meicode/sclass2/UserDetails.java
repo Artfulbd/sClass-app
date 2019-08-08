@@ -1,0 +1,102 @@
+package org.meicode.sclass2;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+
+public class UserDetails {
+    static private String ip = "http://192.168.0.106/sclassapi/serve/";
+    static String login = ip+"login.php";
+    static String signup = ip+"reguser.php";
+
+    // Shared Preferences
+    SharedPreferences pref;
+
+    Editor editor;
+
+    Context _context;
+
+    // Shared pref mode
+    int PRIVATE_MODE = 0;
+
+
+    // Shared preferences file name
+    private static final String PREF_NAME = "UserDetails";
+
+
+     UserDetails(Context context) {
+        this._context = context;
+        pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
+        editor = pref.edit();
+    }
+
+
+
+    public void setErrorMassege(String msg){
+        editor.putString("error", msg);
+        editor.commit();
+    }
+
+    public String getErrorMassege(){
+         return pref.getString("error","");
+    }
+
+    public void clearAll(){
+
+        editor.clear().commit();
+
+    }
+
+    public String getFirstName() {
+        return  pref.getString("firstname","");
+    }
+
+    public void setFirstName(String name) {
+        editor.putString("firstname", name);
+        editor.commit();
+    }
+
+    public String getLastName() {
+        return  pref.getString("lastname","");
+    }
+
+    public void setLastName(String name) {
+        editor.putString("lastname", name);
+        editor.commit();
+    }
+
+    public String getSpeed() {
+        return  pref.getString("speed","0");
+    }
+
+    public void setSpeed(String speed) {
+        editor.putString("speed", speed);
+        editor.commit();
+    }
+
+
+    public void setStatus(String status) {
+        editor.putString("status", status);
+        editor.commit();
+    }
+
+    public String getStatus(){
+         return pref.getString("status","");
+    }
+
+    public void setId(String id) {
+        editor.putString("id", id);
+        editor.commit();
+    }
+
+    public void setType(String type) {
+        editor.putString("type", type);
+        editor.commit();
+    }
+
+    public String getId() {
+        return pref.getString("id","");
+    }
+
+
+}
