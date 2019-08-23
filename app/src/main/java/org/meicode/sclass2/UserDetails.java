@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 public class UserDetails {
-    static private String ip = "http://192.168.0.106/sclassapi/serve/";
+    static private String ip = "http://192.168.0.101/sclassapi/serve/";
     static String login = ip+"login.php";
     static String signup = ip+"reguser.php";
 
