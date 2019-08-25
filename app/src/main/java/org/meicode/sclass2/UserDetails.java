@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import java.util.Map;
+import java.util.Set;
+
 public class UserDetails {
-    static private String ip = "http://192.168.0.101/sclassapi/serve/";
+    static private String ip = "http://192.168.43.11/sclassapi/serve/";
     static String login = ip+"login.php";
     static String signup = ip+"reguser.php";
 
@@ -24,11 +27,12 @@ public class UserDetails {
     private static final String PREF_NAME = "UserDetails";
 
 
-     UserDetails(Context context) {
+    UserDetails(Context context) {
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
     }
+
 
 
 
@@ -38,7 +42,7 @@ public class UserDetails {
     }
 
     public String getErrorMassege(){
-         return pref.getString("error","");
+        return pref.getString("error","");
     }
 
     public void clearAll(){
@@ -81,7 +85,7 @@ public class UserDetails {
     }
 
     public String getStatus(){
-         return pref.getString("status","");
+        return pref.getString("status","");
     }
 
     public void setId(String id) {
@@ -96,6 +100,28 @@ public class UserDetails {
 
     public String getId() {
         return pref.getString("id","");
+    }
+
+    public void setMood(String mood){
+        editor.putString("mood", mood);
+        editor.commit();
+    }
+    public String getMood(){
+        return pref.getString("mood","");
+    }
+
+    public  void setClassList(String clasid, String className){
+        editor.putString(clasid,className);
+        editor.commit();
+    }
+
+
+
+    public  void setList(Map map){
+        Set< Map.Entry<String, String>> st = map.entrySet();
+        for(Map.Entry<String, String> me:  st){
+            setClassList(me.getKey(), me.getValue());
+        }
     }
 
 

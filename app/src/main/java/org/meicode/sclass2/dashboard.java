@@ -9,6 +9,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -55,6 +57,26 @@ public class dashboard extends AppCompatActivity implements NavigationView.OnNav
 
 
     }
+
+
+
+    // here is how to change menu, example student or teacher
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        int menuToChoose = R.menu.drawer_student_menu;
+
+        if (user.getMood().equals("teacher")){
+            menuToChoose = R.menu.drawer_teacher_menu;
+        }
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(menuToChoose, menu);
+        return true;
+    }
+
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -67,6 +89,13 @@ public class dashboard extends AppCompatActivity implements NavigationView.OnNav
                 Intent dash = new Intent(this, MainActivity.class);
                 startActivity(dash);
                 break;
+            case R.id.nav_mates:
+                // open classmates activity
+                break;
+            case R.id.nav_study:
+                // open study activity
+                break;
+            
 
         }
 

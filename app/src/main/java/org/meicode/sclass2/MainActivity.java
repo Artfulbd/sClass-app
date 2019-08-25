@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private static Button login;
     private static TextView attempt, err, sign;
     private static EditText tid, tpass;
-    private String  id, pass;
+    private String  id, pass, logMood;
     private int count = 0;
     static String errorMsg;
 
@@ -68,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 id = tid.getText().toString();
                 pass = tpass.getText().toString();
+
+                logMood = getRadioData();
+
                 if(!id.equals("") && !pass.equals("")){
 
                     CheckAndLogin(pass,id);
@@ -100,11 +104,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     public  void CheckAndLogin(String pass, String id){
-        final Intent dash = new Intent(this, dashboard.class);
+        //final Intent dash = new Intent(this, dashboard.class);
+        final Intent dash = new Intent(this, RecyclerViewActivity.class);
         mQueue = Volley.newRequestQueue(this);
         Map<String, String> params = new HashMap<>();
+        final Map<String, String> classList = new HashMap<>();
+
         params.put("id",id);
         params.put("pass", pass);
+        params.put("mood", logMood);
+        user.setMood(logMood);
         user.setId(id);
 
         JSONObject payload = new JSONObject(params);
@@ -115,12 +124,24 @@ public class MainActivity extends AppCompatActivity {
 
                     Log.d("json response", response.toString());
                     user = new UserDetails(MainActivity.this);
+                    Log.d("Radio", logMood);
 
                     if(response.getString("status").equals("Ok")){
                         user.setStatus(response.getString("status"));
                         user.setFirstName(response.getString("fname"));
                         user.setLastName(response.getString("lname"));
                         user.setSpeed(response.getString("speed"));
+                        JSONArray jsonArray = response.getJSONArray("classList");
+                        JSONObject temp;
+                        if( jsonArray != null){
+                            for(int i = 0; i<jsonArray.length(); i++){
+                                temp = jsonArray.getJSONObject(i);
+                                Log.d("Testing: "+temp.getString("classid") , temp.getString("classname"));
+                                classList.put(temp.getString("classid") , temp.getString("classname"));
+                            }
+
+                        }
+
 
                         user.setType(getRadioData());
                         startActivity(dash);
