@@ -30,7 +30,7 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.MyVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, final int i) {
 
         TextView classIDView = myViewHolder.classIDView;
         TextView classTimeView = myViewHolder.classTimeView;

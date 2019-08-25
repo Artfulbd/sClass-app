@@ -95,7 +95,7 @@ public class dashboard extends AppCompatActivity implements NavigationView.OnNav
             case R.id.nav_study:
                 // open study activity
                 break;
-            
+
 
         }
 
